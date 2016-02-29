@@ -25,6 +25,14 @@ var VolumeControl = {
 			'VolumeControl',
 			'getVolume',
 			[]);
+	},
+	getNotificationVolume: function(successCallback,failureCallback){
+		return exec(
+			successCallback,
+			failureCallback,
+			'VolumeControl',
+			'getNotificationVolume',
+			[]);
 	}
 };
 
