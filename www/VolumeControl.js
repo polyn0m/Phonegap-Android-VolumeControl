@@ -9,30 +9,41 @@
 var exec = require('cordova/exec');
 
 var VolumeControl = {
-  setVolume: function(vol, successCallback, failureCallback, playSound){
+  	setMediaVolume: function(vol, successCallback, failureCallback, playSound){
 		return exec(
 			successCallback,
 			failureCallback,
 			'VolumeControl',
-			'setVolume',
+			'setMediaVolume',
 			[vol, playSound]
 		);
 	},
-	getVolume: function(successCallback,failureCallback){
+	getMediaVolume: function(successCallback, failureCallback){
 		return exec(
 			successCallback,
 			failureCallback,
 			'VolumeControl',
-			'getVolume',
-			[]);
+			'getMediaVolume',
+			[]
+		);
 	},
-	getNotificationVolume: function(successCallback,failureCallback){
+	getNotificationVolume: function(successCallback, failureCallback){
 		return exec(
 			successCallback,
 			failureCallback,
 			'VolumeControl',
 			'getNotificationVolume',
-			[]);
+			[]
+		);
+	},
+	getRingVolume: function(successCallback, failureCallback){
+		return exec(
+			successCallback,
+			failureCallback,
+			'VolumeControl',
+			'getRingVolume',
+			[]
+		);
 	}
 };
 

@@ -1,7 +1,7 @@
 Phonegap-Android-VolumeControl
 ==============================
 
-Manage the music volume to your app.  Create a slider bar or control buttons.  Cordova / PhoneGap plugin.
+Manage the volume to your app. Create a slider bar or control buttons.  Cordova / PhoneGap plugin.
 
 Installation:
 -------------
@@ -19,15 +19,15 @@ __Example of usage (Don't forget include the rest of necessary .js libs such as 
         <script type="text/javascript" charset="utf-8">
           //Set volume to 95 when click button
           $('#volUp').bind('click',function(){
-             VolumeControl.setVolume(95, onVolSuccess, onVolError);
+             VolumeControl.setMediaVolume(95, onVolSuccess, onVolError);
           });
           //Set volume to 25 when click button
           $('#volDown').bind('click',function(){
-              VolumeControl.setVolume(25, onVolSuccess, onVolError);
+              VolumeControl.setMediaVolume(25, onVolSuccess, onVolError);
           });
           //Get current volume
           $('#currVol').bind('click',function(){
-              VolumeControl.getVolume(getVolSuccess, getVolError);
+              VolumeControl.getMediaVolume(getVolSuccess, getVolError);
           });
           //Callbacks
           function onVolSuccess(){
