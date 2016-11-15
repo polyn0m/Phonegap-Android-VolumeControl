@@ -1,5 +1,5 @@
 /*
- * Phonegap VolumeControl Plugin for Android
+ * Cordova PLugin Android Volume Control
  * Cordova 2.2.0
  * Author: Manuel Simpson
  * Email: manusimpson[at]gmail[dot]com
@@ -17,15 +17,9 @@ import org.json.JSONException;
 import android.content.Context;
 import android.media.*;
 
-public class VolumeControl extends CordovaPlugin {
+public class VolumeControl extends CordovaPlugin implements Constants {
 
     private static final String TAG = "VolumeControl";
-        
-	public static final String SET_MEDIA_VOLUME = "setMediaVolume";
-        
-    public static final String GET_MEDIA_VOLUME = "getMediaVolume";
-    public static final String GET_NOTIFICATION_VOLUME = "getNotificationVolume";
-    public static final String GET_RING_VOLUME = "getRingVolume";
 
 	private Context context;
 	private AudioManager manager;
@@ -33,46 +27,69 @@ public class VolumeControl extends CordovaPlugin {
 	@Override
 	public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
 		boolean actionState = true;
+
 		context = cordova.getActivity().getApplicationContext();
 		manager = (AudioManager)context.getSystemService(Context.AUDIO_SERVICE);
 
 		if (SET_MEDIA_VOLUME.equals(action)) {
 			try {
-				//Get the media volume value to set
+				// Get the media volume value to set
 				int volume = getVolumeToSet(args.getInt(0), AudioManager.STREAM_MUSIC);
 				boolean play_sound;
 
-				if(args.length() > 1 && !args.isNull(1)) {
+				if (args.length() > 1 && !args.isNull(1)) {
 					play_sound = args.getBoolean(1);
 				} else {
 					play_sound = true;
 				}
 
-				//Set the volume
+				// Set the volume
 				manager.setStreamVolume(AudioManager.STREAM_MUSIC, volume, (play_sound ? AudioManager.FLAG_PLAY_SOUND : 0));
+
 				callbackContext.success();
 			} catch (Exception e) {
 				LOG.d(TAG, "Error setting Media volume " + e);
+
 				actionState = false;
 			}
-		} else if(GET_MEDIA_VOLUME.equals(action)) {
-				// Get current media volume
-				int currVol = getCurrentMediaVolume();
-				String strVol= String.valueOf(currVol);
-				callbackContext.success(strVol);
-				LOG.d(TAG, "Current Media Volume is " + currVol);
-		} else if(GET_NOTIFICATION_VOLUME.equals(action)) {
-				// Get current notifiavtion volume
-				int currVol = getCurrentNotificationVolume();
-				String strVol= String.valueOf(currVol);
-				callbackContext.success(strVol);
-				LOG.d(TAG, "Current Notification Volume is " + currVol);
-		} else if(GET_RING_VOLUME.equals(action)) {
-				// Get current ring volume
-				int currVol = getCurrentRingVolume();
-				String strVol= String.valueOf(currVol);
-				callbackContext.success(strVol);
-				LOG.d(TAG, "Current Ring Volume is " + currVol);
+		} else if (SET_VOLUME_CONTROL_STREAM.equals(action)) {
+			int stream;
+
+            if (args.length() > 0 && !args.isNull(0)) {
+                stream = args.getInt(0);
+
+                LOG.d(TAG, "Setting control audio stream " + stream);
+
+                cordova.getActivity().setVolumeControlStream(stream);
+
+                callbackContext.success();
+            } else {
+                actionState = false;
+            }	
+		} else if (GET_MEDIA_VOLUME.equals(action)) {
+			// Get current media volume
+			int currVol = getCurrentMediaVolume();
+			String strVol= String.valueOf(currVol);
+
+			callbackContext.success(strVol);
+
+			LOG.d(TAG, "Current Media Volume is " + currVol);
+		} else if (GET_NOTIFICATION_VOLUME.equals(action)) {
+			// Get current notifiavtion volume
+			int currVol = getCurrentNotificationVolume();
+			String strVol= String.valueOf(currVol);
+
+			callbackContext.success(strVol);
+
+			LOG.d(TAG, "Current Notification Volume is " + currVol);
+		} else if (GET_RING_VOLUME.equals(action)) {
+			// Get current ring volume
+			int currVol = getCurrentRingVolume();
+			String strVol= String.valueOf(currVol);
+
+			callbackContext.success(strVol);
+
+			LOG.d(TAG, "Current Ring Volume is " + currVol);
 		} else {
 			actionState = false;
 		}
@@ -96,6 +113,7 @@ public class VolumeControl extends CordovaPlugin {
 			return Math.round((currSystemVol * 100) / maxVolume);
 		} catch (Exception e) {
 			LOG.d(TAG, "getVolume error: " + e);
+
 			return 1;
 		}
 	}

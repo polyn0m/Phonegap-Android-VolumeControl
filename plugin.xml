@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
         xmlns:android="http://schemas.android.com/apk/res/android"
-        id="com.develcode.plugins.volumeControl"
+        id="cordova-plugin-android-volume-control"
         version="1.0">
 
-   <name>Android Volume Control Plugin</name>
-
-   <description>
+  <name>Cordova Plugin Android Volume Control</name>
+  <author>Manuel Simpson, Goncharov Ilia & other contributors</author>
+  <description>
       Allows setting and retrieving the media volume of the device.
-   </description>
+  </description>
 
-   <license>MIT</license>
+  <license>MIT</license>
 
-   <engines>
+  <engines>
       <engine name="cordova" version=">=3.0.0"/>
-   </engines>
+  </engines>
 
-   <platform name="android">
+  <platform name="android">
       <config-file target="res/xml/config.xml" parent="/*">
          <feature name="VolumeControl">
             <param name="android-package" value="com.develcode.plugins.volumeControl.VolumeControl" />
@@ -32,6 +32,7 @@
       </js-module>
 
       <source-file src="src/android/VolumeControl.java" target-dir="src/com/develcode/plugins/volumeControl" />
+      <source-file src="src/android/Constants.java" target-dir="src/com/develcode/plugins/volumeControl" />
 
    </platform>
 </plugin>

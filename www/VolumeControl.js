@@ -1,5 +1,5 @@
 /*
- * Phonegap VolumeControl Plugin for Android
+ * Phonegap VolumeControl Plugin
  * Cordova 2.2.0
  * Email: manusimpson[at]gmail[dot]com
  * Author: Manuel Simpson
@@ -9,16 +9,30 @@
 var exec = require('cordova/exec');
 
 var VolumeControl = {
-  	setMediaVolume: function(vol, successCallback, failureCallback, playSound){
+	STREAM_MEDIA: 3, 
+	STREAM_NOTIFICATION: 5,
+	STREAM_RING: 2,
+	STREAM_VOICE_CALL: 0,
+
+  	setMediaVolume: function(volume, successCallback, failureCallback, playSound) {
 		return exec(
 			successCallback,
 			failureCallback,
 			'VolumeControl',
 			'setMediaVolume',
-			[vol, playSound]
+			[volume, playSound]
 		);
 	},
-	getMediaVolume: function(successCallback, failureCallback){
+	setVolumeControlStream: function(stream, successCallback, failureCallback) {
+		return exec(
+			successCallback,
+			failureCallback,
+			'VolumeControl',
+			'setVolumeControlStream',
+			[stream]
+		);
+	},
+	getMediaVolume: function(successCallback, failureCallback) {
 		return exec(
 			successCallback,
 			failureCallback,
@@ -27,7 +41,7 @@ var VolumeControl = {
 			[]
 		);
 	},
-	getNotificationVolume: function(successCallback, failureCallback){
+	getNotificationVolume: function(successCallback, failureCallback) {
 		return exec(
 			successCallback,
 			failureCallback,
@@ -36,7 +50,7 @@ var VolumeControl = {
 			[]
 		);
 	},
-	getRingVolume: function(successCallback, failureCallback){
+	getRingVolume: function(successCallback, failureCallback) {
 		return exec(
 			successCallback,
 			failureCallback,
